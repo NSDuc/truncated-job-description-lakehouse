@@ -1,0 +1,235 @@
+agile
+ajax
+algorithm
+amazon web
+analyst
+android
+angular
+api testing
+asp.net
+automotive
+aws
+bachelor degree
+backend development
+bash
+bitbucket
+blockchain
+build tools
+business analysis
+c
+clean code
+cloud
+cloud technologies
+confluence
+containers
+css
+database
+devops
+distributed systems
+django
+dynamodb
+english
+etl
+event driven
+excel
+fintech
+fresher
+go
+golang
+google cloud
+gradle
+grafana
+graphql
+hadoop
+hibernate
+html
+html5
+http
+ibm
+ios
+ios android
+iot
+ip
+iso
+japan
+java
+java core
+java kotlin
+java net
+java spring
+javascript
+jee
+jenkin
+jest
+jira
+jpa
+jquery
+js
+json
+junior
+junit
+k8s
+kafka
+kanban
+kotlin
+kubernetes
+lambda
+laravel
+large scale
+layout
+linux
+magento
+maven
+message queue
+micro service
+microservice
+microsoft
+mobile
+mobile app
+mobile application
+mobile development
+mocha
+mockup
+mong
+mongodb
+ms sql
+mssql
+multi
+multi task
+multi thread
+multiple
+multitask
+mvc
+mvp
+mvvm
+mysql
+native
+net
+net c
+net core
+net framework
+nginx
+node
+node.js
+nodej
+nodejs
+nosql
+nosql database
+npm
+oauth
+objective c
+oop
+oop design
+open source
+photoshop
+php
+postgres
+postgresql
+postman
+presentation skills
+python
+qa
+qc
+react
+reactjs
+ruby
+saas
+science computer
+science engineering
+science information
+script
+scripting
+scripting language
+scrum
+scrum
+scrum
+scrum agile
+scrum master
+scrum methodology
+scss
+sdk
+selenium
+senior
+seo
+shell
+soa
+soap
+socket
+software development
+software engineer
+software engineering
+software testing
+solid
+source control
+spark
+splunk
+spring
+spring boot
+spring framework
+spring security
+sql
+sql server
+svn
+swift
+system design
+tcp
+tcp ip
+tdd
+teamwork spirit
+terraform
+test
+test automation
+test cases
+test driven
+tester
+testing
+testing frameworks
+tests
+thuật toán
+time management
+tiếng anh
+tiếng nhật
+toeic
+tomcat
+trong môi
+troubleshooting
+typescript
+ui
+ui ux
+uml
+unit
+unit test
+unit testing
+unit tests
+unity
+unix
+ux
+ux ui
+version control
+versioning tools
+vietnam
+vietnamese
+viễn thông
+vmware
+vuejs
+warehouse
+waterfall
+web
+web api
+web app
+web application
+web applications
+web based
+web design
+web development
+web mobile
+web service
+web services
+webpack
+website
+wordpress
+workflow
+xml
+zend
+điện tử
+đại học

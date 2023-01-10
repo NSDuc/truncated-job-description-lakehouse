@@ -1,0 +1,12 @@
+"apache-airflow[celery]==2.3.3" --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.3.3/constraints-3.7.txt"
+"apache-airflow-providers-ssh"
+pendulum
+kafka-python
+bs4
+beautifulsoup4
+selenium
+pyspark
+elasticsearch
+matplotlib
+wordcloud
+python-dotenv
