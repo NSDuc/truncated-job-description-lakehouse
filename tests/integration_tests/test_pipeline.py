@@ -142,6 +142,7 @@ class TestJobDescriptionPipeline(TestCase):
         WordCloudServiceImpl.open_word_cloud(self.delta_word_cloud_path)
 
     def test_analysis_stage_data(self):
+        tag_term_count = None
         total_term_point = Counter()
         field_params = {
             JobDescriptionColumn.TAGS: (6, 1),
@@ -153,13 +154,16 @@ class TestJobDescriptionPipeline(TestCase):
             term_point = self.es_impl.get_term_count(field=field,
                                                      index=self.elasticsearch_index_1,
                                                      min_doc_count=min_doc_count)
+            if field == JobDescriptionColumn.TAGS:
+                tag_term_count = term_point
+
             for i in range(point):
                 total_term_point += term_point.copy()
-
+        self.assertIsNotNone(tag_term_count)
         tags, not_tags = TagChecker.check(total_term_point, path="../docs/tags.txt")
 
-        tags_point = {k: v for k, v in total_term_point.items() if k in tags}
-        not_tags_point = {k: v for k, v in total_term_point.items() if k in not_tags}
+        tags_point = {k: v for k, v in total_term_point.items() if k in tags or k in tag_term_count}
+        not_tags_point = {k: v for k, v in total_term_point.items() if k in not_tags and k not in tag_term_count}
 
-        WordCloudServiceImpl.generate_table(not_tags_point)
+        WordCloudServiceImpl.generate_table(tags_point)
         WordCloudServiceImpl.generate_word_cloud(frequency=tags_point, savefig_path=self.analyzed_word_cloud_path_1)

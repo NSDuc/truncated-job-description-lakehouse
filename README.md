@@ -63,15 +63,15 @@ Create Airflow Connection for each type of server
 > Example of Silver Table of Job-Descriptions
 
 ### Word cloud
-![Word Cloud 1](docs/word_cloud_delta_tags_readme.png)
-
+<img src="docs/word_cloud_delta_tags_readme.png" alt="drawing" width="500" height="320">
 
 > Word Cloud of Tags <span style="color: red">tagged by Employer</span> 
 > using Gold Tag Table
 
 ###
 
-![Word Cloud 2](docs/word_cloud_analysed_tags_readme.png)
+<img src="docs/word_cloud_analysed_tags_readme.png" alt="drawing" width="500" height="320">
+
 > Word Cloud of <span style="color: red">analyzed</span> Tags 
 > using Elasticsearch and tags.txt file
 >   - Job:Tags has 6 points

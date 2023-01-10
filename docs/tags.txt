@@ -9,31 +9,42 @@ api testing
 asp.net
 automotive
 aws
+azure
 bachelor degree
 backend development
 bash
 bitbucket
 blockchain
+bootstrap
 build tools
 business analysis
 c
+ci cd
 clean code
 cloud
 cloud technologies
+communication
 confluence
 containers
+continuous integration
 css
 database
 devops
 distributed systems
 django
+docker
 dynamodb
 english
 etl
 event driven
 excel
 fintech
+flutter
 fresher
+front end
+frontend
+gcp
+git
 go
 golang
 google cloud
@@ -52,6 +63,7 @@ iot
 ip
 iso
 japan
+japanese
 java
 java core
 java kotlin
@@ -71,6 +83,7 @@ junit
 k8s
 kafka
 kanban
+korea
 kotlin
 kubernetes
 lambda
@@ -132,6 +145,7 @@ qa
 qc
 react
 reactjs
+relational databases
 ruby
 saas
 science computer
@@ -211,6 +225,7 @@ vietnam
 vietnamese
 viễn thông
 vmware
+vue.js
 vuejs
 warehouse
 waterfall
