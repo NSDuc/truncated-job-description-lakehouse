@@ -102,7 +102,7 @@ class TestJobDescriptionPipeline(TestCase):
                                                kafka_bootstrap_servers=self.kafka_bootstrap_servers,
                                                kafka_topic=self.kafka_topic,
                                                storage_path=self.storage_path)
-        storage_impl.run()
+        storage_impl.run_etl()
 
     def test_storage_stage_data(self):
         spark_impl = SparkServiceImpl.Builder.create_spark_impl_for_delta('test_bronze')
@@ -119,7 +119,7 @@ class TestJobDescriptionPipeline(TestCase):
                                                   elasticsearch_nodes=self.elasticsearch_hosts,
                                                   elasticsearch_checkpoint=self.elasticsearch_checkpoint)
 
-        process_impl.run()
+        process_impl.run_etl()
         time.sleep(30)
 
     def test_processing_stage_data(self):
@@ -133,7 +133,7 @@ class TestJobDescriptionPipeline(TestCase):
                                                  process_path=self.process_path,
                                                  analysis_path=self.analysis_path,
                                                  cloud_word_path=self.delta_word_cloud_path)
-        analysis_impl.run()
+        analysis_impl.run_etl()
 
     def test_analysis_stage_delta_data(self):
         spark_impl = SparkServiceImpl.Builder.create_spark_impl_for_delta(app_name='test_gold')

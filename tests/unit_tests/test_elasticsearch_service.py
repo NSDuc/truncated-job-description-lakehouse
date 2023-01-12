@@ -16,6 +16,7 @@ class ElasticsearchServiceTestContext:
         self.es_impl = ElasticSearchServiceImpl(hosts=self.es_hosts)
         self.analyzed_word_cloud_path_0 = config[ANALYZED_WORD_CLOUD_PATH_0]
 
+
 class TestElasticsearchServiceCommon(TestCase, ElasticsearchServiceTestContext):
     def __init__(self, *args, **kwargs):
         ElasticsearchServiceTestContext.__init__(self)

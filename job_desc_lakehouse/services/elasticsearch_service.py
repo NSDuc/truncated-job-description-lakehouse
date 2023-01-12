@@ -1,8 +1,6 @@
-import json
 from collections import Counter
-
-from job_desc_lakehouse.DTO.job_desc import JobDescPropName
 from elasticsearch import Elasticsearch
+from job_desc_lakehouse.DTO.job_desc import JobDescPropName
 
 _vietnam_stopwords = ["bị", "bởi", "cả", "các", "cái", "cần", "càng", "chỉ", "chiếc", "cho", "chứ", "chưa", "chuyện",
                       "có", "có thể", "cứ", "của", "cùng", "cũng", "đã", "đang", "đây", "để", "đến nỗi", "đều", "điều",
@@ -14,37 +12,33 @@ _vietnam_stopwords = ["bị", "bởi", "cả", "các", "cái", "cần", "càng",
 
 class _EsFieldType:
     @staticmethod
-    def LONG():
-        return {"type": "long"}
-
-    @staticmethod
-    def KEYWORD():
-        return {"type": "keyword"}
-
-    @staticmethod
-    def TEXT(fielddata=False, analyzer=None):
-        conf = {
-            "type": "text",
-            "fielddata": fielddata,
-        }
-        if analyzer:
-            conf["analyzer"] = analyzer
+    def field(_type, **kwargs):
+        conf = {"type": _type, **kwargs}
         return conf
 
     @staticmethod
-    def TEXT_KEYWORD(analyzer=None):
+    def subfield(_name, _type, **kwargs):
         conf = {
-            "type": "text",
-            "fielddata": True,
-            "fields": {
-                "keyword": {
-                    "type": "keyword"
-                }
-            }
+            _name: {"type": _type},
+            **kwargs
         }
-        if analyzer:
-            conf["analyzer"] = analyzer
         return conf
+
+    @staticmethod
+    def LONG(**kwargs):
+        return _EsFieldType.field("long", **kwargs)
+
+    @staticmethod
+    def KEYWORD(**kwargs):
+        return _EsFieldType.field("keyword", **kwargs)
+
+    @staticmethod
+    def TEXT(**kwargs):
+        return _EsFieldType.field("text", **kwargs)
+
+    @staticmethod
+    def TEXT_KEYWORD(**kwargs):
+        return _EsFieldType.TEXT(**kwargs, fields=_EsFieldType.subfield("keyword", "keyword"))
 
 
 class _EsAnalysisName:
@@ -122,12 +116,9 @@ class ElasticSearchServiceImpl:
                 JobDescPropName.TITLE: _EsFieldType.TEXT_KEYWORD(),
                 JobDescPropName.TAGS: _EsFieldType.TEXT_KEYWORD(),
                 JobDescPropName.COMPANY: _EsFieldType.TEXT_KEYWORD(),
-                JobDescPropName.OVERVIEW: _EsFieldType.TEXT(fielddata=True,
-                                                            analyzer=_EsAnalysisName.TAG_ANALYZER),
-                JobDescPropName.REQUIREMENT: _EsFieldType.TEXT(fielddata=True,
-                                                               analyzer=_EsAnalysisName.TAG_ANALYZER),
-                JobDescPropName.BENEFIT: _EsFieldType.TEXT(fielddata=True,
-                                                           analyzer=_EsAnalysisName.TAG_ANALYZER),
+                JobDescPropName.OVERVIEW: _EsFieldType.TEXT(fielddata=True, analyzer=_EsAnalysisName.TAG_ANALYZER),
+                JobDescPropName.REQUIREMENT: _EsFieldType.TEXT(fielddata=True, analyzer=_EsAnalysisName.TAG_ANALYZER),
+                JobDescPropName.BENEFIT: _EsFieldType.TEXT(fielddata=True, analyzer=_EsAnalysisName.TAG_ANALYZER),
             },
         }
     }

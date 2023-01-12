@@ -1,5 +1,5 @@
 class ETLService:
-    def run(self):
+    def run_etl(self):
         df = self.exact()
 
         new_df = self.transform(df)

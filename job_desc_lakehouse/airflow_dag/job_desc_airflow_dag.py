@@ -134,7 +134,7 @@ with DAG(dag_id='job_description_pipeline',
                                                    kafka_topic=kafka.get_conn_extra_field('topic'),
                                                    storage_path=hadoop.get_conn_extra_field('storage_path'),
                                                    storage_file_fmt='delta')
-            storage_impl.run()
+            storage_impl.run_etl()
 
         run2 = storage_new_job_descriptions()
 
@@ -160,7 +160,7 @@ with DAG(dag_id='job_description_pipeline',
                                                       elasticsearch_index=elasticsearch.get_conn_extra_field('index'),
                                                       elasticsearch_nodes=elasticsearch.get_conn_extra_field('nodes'),
                                                       elasticsearch_checkpoint=hadoop.get_conn_extra_field('elasticsearch_checkpoint'))
-            process_impl.run()
+            process_impl.run_etl()
 
         run3 = process_new_job_descriptions()
         Label('Start elasticsearch services') >> pre_run3 >> Label('Process') >> run3
@@ -180,7 +180,7 @@ with DAG(dag_id='job_description_pipeline',
                                                      analysis_path=hadoop.get_conn_extra_field('analysis_path'),
                                                      analysis_file_fmt='delta',
                                                      savefig_file='/tmp/output.png')
-            analysis_impl.run()
+            analysis_impl.run_etl()
 
         run4 = analyze_new_job_descriptions()
         Label('Analyze') >> run4 >> Label('Stop all services') >> post_run4
