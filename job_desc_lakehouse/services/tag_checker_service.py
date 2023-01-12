@@ -17,6 +17,10 @@ class TagCheckerCondition:
                 return True
         return False
 
+    @staticmethod
+    def is_number(term: str):
+        return term.isnumeric()
+
 
 class TagChecker:
     @staticmethod
@@ -40,7 +44,9 @@ class TagChecker:
         allowed_terms = set()
         dropped_terms = set()
         for term in terms:
-            if TagCheckerCondition.not_one_word_ascii(term) or TagCheckerCondition.contain_drop_word(term):
+            if TagCheckerCondition.not_one_word_ascii(term) or \
+                    TagCheckerCondition.contain_drop_word(term) or \
+                    TagCheckerCondition.is_number(term):
                 continue
 
             if term in validated_tags:

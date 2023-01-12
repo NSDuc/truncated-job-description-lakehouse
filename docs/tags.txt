@@ -19,6 +19,8 @@ bootstrap
 build tools
 business analysis
 c
+ci
+cd
 ci cd
 clean code
 cloud
@@ -127,7 +129,6 @@ node.js
 nodej
 nodejs
 nosql
-nosql database
 npm
 oauth
 objective c

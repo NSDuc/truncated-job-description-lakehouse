@@ -114,7 +114,7 @@ class ElasticSearchServiceImpl:
                 JobDescPropName.SOURCE: _EsFieldType.KEYWORD(),
                 JobDescPropName.COLLECT_ID: _EsFieldType.LONG(),
                 JobDescPropName.TITLE: _EsFieldType.TEXT_KEYWORD(),
-                JobDescPropName.TAGS: _EsFieldType.TEXT_KEYWORD(),
+                JobDescPropName.TAGS: _EsFieldType.TEXT_KEYWORD(fielddata=True),
                 JobDescPropName.COMPANY: _EsFieldType.TEXT_KEYWORD(),
                 JobDescPropName.OVERVIEW: _EsFieldType.TEXT(fielddata=True, analyzer=_EsAnalysisName.TAG_ANALYZER),
                 JobDescPropName.REQUIREMENT: _EsFieldType.TEXT(fielddata=True, analyzer=_EsAnalysisName.TAG_ANALYZER),

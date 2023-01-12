@@ -7,7 +7,7 @@ class WordCloudServiceImpl:
     @staticmethod
     def generate_table(frequency):
         frequency = {k: v for k, v in sorted(frequency.items(), key=lambda item: item[1], reverse=True)}
-        header = f"|{'Term':15}|{'Count':<5}|"
+        header = f"Id |{'Term':15}|{'Count':<5}|"
         print(header)
         print('-' * len(header))
 

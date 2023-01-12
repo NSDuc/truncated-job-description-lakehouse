@@ -1,22 +1,25 @@
 import json
 import time
 import pendulum
-from test_common import TestConfigLoader, KAFKA_TOPIC, KAFKA_BOOTSTRAP_SERVERS
 from pprint import pprint
 from unittest import TestCase
 from kafka import KafkaConsumer
 from kafka.consumer.fetcher import ConsumerRecord
+from test_base import TestContext
 from job_desc_lakehouse.services.kafka_service import KafkaAdminClientImpl, KafkaProducerImpl
 
 
-class TestKafkaAdminClientImpl(TestCase):
+class TestKafkaContext(TestContext):
+    def __init__(self):
+        super(TestKafkaContext, self).__init__()
+
+
+class TestKafkaAdminClientImpl(TestCase, TestKafkaContext):
     def __init__(self, *args, **kwargs):
-        super(TestKafkaAdminClientImpl, self).__init__(*args, **kwargs)
-        conf = TestConfigLoader.load_config()
-        self.bootstrap_server = conf[KAFKA_BOOTSTRAP_SERVERS]
-        self.topic = conf[KAFKA_TOPIC]
-        print(self.bootstrap_server, self.topic)
-        self.impl = KafkaAdminClientImpl(KAFKA_BOOTSTRAP_SERVERS)
+        TestKafkaContext.__init__(self)
+        TestCase.__init__(self, *args, **kwargs)
+
+        self.impl = KafkaAdminClientImpl(self.kafka_bootstrap_servers)
 
     def test_connection(self):
         self.assertIsNotNone(self.impl)
@@ -26,21 +29,22 @@ class TestKafkaAdminClientImpl(TestCase):
         pprint(topics)
 
     def test_create_topic(self):
-        self.impl.create_topic(self.topic)
+        self.impl.create_topic(self.kafka_topic)
         topics = self.impl.get_topics()
-        self.assertIn(self.topic, topics, f'Create topic {self.topic} failed')
-        print(f'Exist {self.topic} in {topics}')
+        self.assertIn(self.kafka_topic, topics, f'Create topic {self.kafka_topic} failed')
+        print(f'Exist {self.kafka_topic} in {topics}')
 
     def test_delete_topic(self):
-        self.impl.delete_topic(self.topic)
-        self.assertNotIn(self.topic, self.impl.get_topics(), f'Delete topic {self.topic} failed')
+        self.impl.delete_topic(self.kafka_topic)
+        self.assertNotIn(self.kafka_topic, self.impl.get_topics(), f'Delete topic {self.kafka_topic} failed')
 
 
-class TestKafkaProducerConsumerImpl(TestCase):
+class TestKafkaProducerConsumerImpl(TestCase, TestKafkaContext):
     def __init__(self, *args, **kwargs):
-        super(TestKafkaProducerConsumerImpl, self).__init__(*args, **kwargs)
-        self.admin_client_impl = KafkaAdminClientImpl('localhost:9092')
+        TestKafkaContext.__init__(self)
+        TestCase.__init__(self, *args, **kwargs)
         self.topic = 'tmp'
+        self.admin_client_impl = KafkaAdminClientImpl('localhost:9092')
         self.producer_impl = KafkaProducerImpl('localhost:9092', self.topic)
 
     def test_consumer_read(self):

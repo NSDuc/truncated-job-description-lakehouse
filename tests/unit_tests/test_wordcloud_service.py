@@ -1,17 +1,19 @@
 import collections
 import random
 from unittest import TestCase
-from test_common import *
+from test_base import TestContext
 from job_desc_lakehouse.services.wordcloud_service import WordCloudServiceImpl
 
 
-class TestWordCloudServiceImpl(TestCase):
+class TestWordCloudServiceContext(TestContext):
+    def __init__(self):
+        super(TestWordCloudServiceContext, self).__init__()
+
+
+class TestWordCloudServiceImpl(TestCase, TestWordCloudServiceContext):
     def __init__(self, *args, **kwargs):
-        super(TestWordCloudServiceImpl, self).__init__(*args, **kwargs)
-        conf = TestConfigLoader.load_config()
-        self.delta_word_cloud_path = conf[DELTA_WORD_CLOUD_PATH]
-        self.analyzed_word_cloud_path_0 = conf[ANALYZED_WORD_CLOUD_PATH_0]
-        self.analyzed_word_cloud_path_1 = conf[ANALYZED_WORD_CLOUD_PATH_1]
+        TestWordCloudServiceContext.__init__(self)
+        TestCase.__init__(self, *args, **kwargs)
 
     def test_generate_word_cloud(self):
         frequency = collections.defaultdict(lambda: 0)
