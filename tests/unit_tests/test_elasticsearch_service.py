@@ -3,7 +3,7 @@ from test_common import *
 from pprint import pprint
 from unittest import TestCase
 from job_desc_lakehouse.services.elasticsearch_service import ElasticSearchServiceImpl
-from job_desc_lakehouse.DTO.job_desc_dto import JobDescriptionColumn
+from job_desc_lakehouse.DTO.job_desc import JobDescPropName
 from job_desc_lakehouse.services.wordcloud_service import WordCloudServiceImpl
 
 
@@ -38,7 +38,7 @@ class TestElasticsearchServiceCommon(TestCase, ElasticsearchServiceTestContext):
 
     def test_search(self):
         text = "k8s C#"
-        pprint(self.es_impl.search(self.es_index_1, JobDescriptionColumn.REQUIREMENT, text))
+        pprint(self.es_impl.search(self.es_index_1, JobDescPropName.REQUIREMENT, text))
 
 
 class TestElasticsearchIndex0(TestCase, ElasticsearchServiceTestContext):
@@ -106,7 +106,7 @@ class TestElasticsearchServiceImpl(TestCase, ElasticsearchServiceTestContext):
         pprint(self.es_impl.count(dst_index))
 
     def test_term_count_0(self):
-        term_count = self.es_impl.get_term_count(field=JobDescriptionColumn.TAGS,
+        term_count = self.es_impl.get_term_count(field=JobDescPropName.TAGS,
                                                  index=self.es_index_1)
         WordCloudServiceImpl.generate_table(term_count)
         WordCloudServiceImpl.generate_word_cloud(frequency=term_count, savefig_path=self.analyzed_word_cloud_path_0)
@@ -114,10 +114,10 @@ class TestElasticsearchServiceImpl(TestCase, ElasticsearchServiceTestContext):
     def test_term_count_1(self):
         total_term_count = Counter()
         field_params = {
-            JobDescriptionColumn.TAGS: (6, 1),
-            JobDescriptionColumn.OVERVIEW: (1, 10),
-            JobDescriptionColumn.REQUIREMENT: (1, 10),
-            JobDescriptionColumn.BENEFIT: (1, 10),
+            JobDescPropName.TAGS: (6, 1),
+            JobDescPropName.OVERVIEW: (1, 10),
+            JobDescPropName.REQUIREMENT: (1, 10),
+            JobDescPropName.BENEFIT: (1, 10),
         }
         for field, (point, min_doc_count) in field_params.items():
             term_count = self.es_impl.get_term_count(field=field,

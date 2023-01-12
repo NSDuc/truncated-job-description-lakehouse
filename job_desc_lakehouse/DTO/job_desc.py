@@ -1,4 +1,4 @@
-class JobDescriptionColumn:
+class JobDescPropName:
     ID = 'id'
     TITLE = 'title'
     TAG = 'tag'
@@ -12,7 +12,7 @@ class JobDescriptionColumn:
     SOURCE = 'source'
 
 
-class JobDescriptionDTO:
+class JobDesc:
     def __init__(self, id=None):
         self._id = id
         self._source: str = ''

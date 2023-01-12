@@ -1,9 +1,9 @@
 import hashlib
 from bs4 import BeautifulSoup
-from job_desc_lakehouse.DTO.job_desc_dto import JobDescriptionDTO
+from job_desc_lakehouse.DTO.job_desc import JobDesc
 
 
-class JobDescDTOBuilder:
+class JobDescBuilder:
     def __init__(self):
         self._id           = None
         self._source       = None
@@ -73,8 +73,8 @@ class JobDescDTOBuilder:
         self._post_time = None
         self._raw = None
 
-    def build_job_desc_dto(self) -> JobDescriptionDTO:
-        job_desc = JobDescriptionDTO()
+    def build_job_desc_dto(self) -> JobDesc:
+        job_desc = JobDesc()
         job_desc.id           = self._id
         job_desc.source       = self._source
         job_desc.title        = self._title
@@ -90,7 +90,7 @@ class JobDescDTOBuilder:
         return job_desc
 
 
-class ItViecJobDescDTOBuilder(JobDescDTOBuilder):
+class ItViecJobDescBuilder(JobDescBuilder):
     def build_job_desc_id(self):
         hash_text = ""
         try:
@@ -117,13 +117,13 @@ class ItViecJobDescDTOBuilder(JobDescDTOBuilder):
         self.set_overview(paragraphs_[0])
         self.set_requirement(paragraphs_[1])
 
-    def build_job_desc_dto(self) -> JobDescriptionDTO:
+    def build_job_desc_dto(self) -> JobDesc:
         self.set_source("itviec.com")
         self.build_job_desc_from_raw_html()
         # self.build_job_desc_id()
-        return super(ItViecJobDescDTOBuilder, self).build_job_desc_dto()
+        return super(ItViecJobDescBuilder, self).build_job_desc_dto()
 
 
-class VietNamWorkJobDescDTOBuilder(JobDescDTOBuilder):
-    def build_job_desc_dto(self) -> JobDescriptionDTO:
+class VietNamWorkJobDescBuilder(JobDescBuilder):
+    def build_job_desc_dto(self) -> JobDesc:
         raise NotImplementedError

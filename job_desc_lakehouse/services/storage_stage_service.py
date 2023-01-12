@@ -2,7 +2,7 @@ from pyspark.sql.dataframe import DataFrame
 from pyspark.sql.functions import element_at, col
 from pyspark.sql.types import StringType, IntegerType
 
-from job_desc_lakehouse.DTO.job_desc_dto import JobDescriptionColumn
+from job_desc_lakehouse.DTO.job_desc import JobDescPropName
 from job_desc_lakehouse.DTO.medalion_table_dto import MedallionTableDTO
 from job_desc_lakehouse.services.spark_service import SparkServiceImpl
 from job_desc_lakehouse.services.etl_service import ETLService
@@ -29,10 +29,10 @@ class StorageStageServiceImpl(ETLService):
                         'timestamp',
                         'timestampType') \
             .withColumn('source_kv', element_at(col('headers'), 1)) \
-            .withColumn(JobDescriptionColumn.SOURCE, col('source_kv.value').cast(StringType())) \
+            .withColumn(JobDescPropName.SOURCE, col('source_kv.value').cast(StringType())) \
             .drop('source_kv') \
             .withColumn('collect_id_kv', element_at(col('headers'), 2)) \
-            .withColumn(JobDescriptionColumn.COLLECT_ID, col('collect_id_kv.value').cast(StringType()).cast(IntegerType())) \
+            .withColumn(JobDescPropName.COLLECT_ID, col('collect_id_kv.value').cast(StringType()).cast(IntegerType())) \
             .drop('collect_id_kv') \
             .drop('headers')
         return new_df

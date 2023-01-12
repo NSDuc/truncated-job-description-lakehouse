@@ -17,8 +17,8 @@ from job_desc_lakehouse.services.tag_checker_service import TagChecker
 from job_desc_lakehouse.services.spark_service import SparkServiceImpl
 from job_desc_lakehouse.services.elasticsearch_service import ElasticSearchServiceImpl
 from job_desc_lakehouse.services.wordcloud_service import WordCloudServiceImpl
-from job_desc_lakehouse.DTO.job_desc_dto import JobDescriptionDTO, JobDescriptionColumn
-from job_desc_lakehouse.DTO.job_desc_dto_builder import ItViecJobDescDTOBuilder
+from job_desc_lakehouse.DTO.job_desc import JobDesc, JobDescPropName
+from job_desc_lakehouse.DTO.job_desc_builder import ItViecJobDescBuilder
 
 
 class TestJobDescriptionPipeline(TestCase):
@@ -59,7 +59,7 @@ class TestJobDescriptionPipeline(TestCase):
         )
         job_collector = JDCollectServiceImpl()
 
-        jobs : List[JobDescriptionDTO] = job_collector.collect_job_descriptions(job_collect_options)
+        jobs : List[JobDesc] = job_collector.collect_job_descriptions(job_collect_options)
         for i, job in enumerate(jobs):
             print(f'{i:2} | {job}')
             kafka_producer.send(message=job.raw,
@@ -67,7 +67,7 @@ class TestJobDescriptionPipeline(TestCase):
                                          ('collect_id', '1'.encode())],
                                 key=job.source.encode())
 
-        builder = ItViecJobDescDTOBuilder()
+        builder = ItViecJobDescBuilder()
         for i, send_job in enumerate(jobs):
             record: ConsumerRecord = next(kafka_consumer)
 
@@ -145,16 +145,16 @@ class TestJobDescriptionPipeline(TestCase):
         tag_term_count = None
         total_term_point = Counter()
         field_params = {
-            JobDescriptionColumn.TAGS: (6, 1),
-            JobDescriptionColumn.OVERVIEW: (1, 3),
-            JobDescriptionColumn.REQUIREMENT: (1, 3),
-            JobDescriptionColumn.BENEFIT: (1, 3),
+            JobDescPropName.TAGS: (6, 1),
+            JobDescPropName.OVERVIEW: (1, 3),
+            JobDescPropName.REQUIREMENT: (1, 3),
+            JobDescPropName.BENEFIT: (1, 3),
         }
         for field, (point, min_doc_count) in field_params.items():
             term_point = self.es_impl.get_term_count(field=field,
                                                      index=self.elasticsearch_index_1,
                                                      min_doc_count=min_doc_count)
-            if field == JobDescriptionColumn.TAGS:
+            if field == JobDescPropName.TAGS:
                 tag_term_count = term_point
 
             for i in range(point):

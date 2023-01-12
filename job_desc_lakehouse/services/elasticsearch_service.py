@@ -1,7 +1,7 @@
 import json
 from collections import Counter
 
-from job_desc_lakehouse.DTO.job_desc_dto import JobDescriptionColumn
+from job_desc_lakehouse.DTO.job_desc import JobDescPropName
 from elasticsearch import Elasticsearch
 
 _vietnam_stopwords = ["bị", "bởi", "cả", "các", "cái", "cần", "càng", "chỉ", "chiếc", "cho", "chứ", "chưa", "chuyện",
@@ -60,14 +60,14 @@ class ElasticSearchServiceImpl:
     _SETTING_BODY_0 = {
         "mappings": {
             "properties": {
-                JobDescriptionColumn.SOURCE: _EsFieldType.KEYWORD(),
-                JobDescriptionColumn.COLLECT_ID: _EsFieldType.LONG(),
-                JobDescriptionColumn.TITLE: _EsFieldType.TEXT_KEYWORD(),
-                JobDescriptionColumn.TAGS: _EsFieldType.TEXT_KEYWORD(),
-                JobDescriptionColumn.COMPANY: _EsFieldType.TEXT_KEYWORD(),
-                JobDescriptionColumn.OVERVIEW: _EsFieldType.TEXT(),
-                JobDescriptionColumn.REQUIREMENT: _EsFieldType.TEXT(),
-                JobDescriptionColumn.BENEFIT: _EsFieldType.TEXT(),
+                JobDescPropName.SOURCE: _EsFieldType.KEYWORD(),
+                JobDescPropName.COLLECT_ID: _EsFieldType.LONG(),
+                JobDescPropName.TITLE: _EsFieldType.TEXT_KEYWORD(),
+                JobDescPropName.TAGS: _EsFieldType.TEXT_KEYWORD(),
+                JobDescPropName.COMPANY: _EsFieldType.TEXT_KEYWORD(),
+                JobDescPropName.OVERVIEW: _EsFieldType.TEXT(),
+                JobDescPropName.REQUIREMENT: _EsFieldType.TEXT(),
+                JobDescPropName.BENEFIT: _EsFieldType.TEXT(),
             }
         }
     }
@@ -117,17 +117,17 @@ class ElasticSearchServiceImpl:
         },
         "mappings": {
             "properties": {
-                JobDescriptionColumn.SOURCE: _EsFieldType.KEYWORD(),
-                JobDescriptionColumn.COLLECT_ID: _EsFieldType.LONG(),
-                JobDescriptionColumn.TITLE: _EsFieldType.TEXT_KEYWORD(),
-                JobDescriptionColumn.TAGS: _EsFieldType.TEXT_KEYWORD(),
-                JobDescriptionColumn.COMPANY: _EsFieldType.TEXT_KEYWORD(),
-                JobDescriptionColumn.OVERVIEW: _EsFieldType.TEXT(fielddata=True,
-                                                                 analyzer=_EsAnalysisName.TAG_ANALYZER),
-                JobDescriptionColumn.REQUIREMENT: _EsFieldType.TEXT(fielddata=True,
-                                                                    analyzer=_EsAnalysisName.TAG_ANALYZER),
-                JobDescriptionColumn.BENEFIT: _EsFieldType.TEXT(fielddata=True,
-                                                                analyzer=_EsAnalysisName.TAG_ANALYZER),
+                JobDescPropName.SOURCE: _EsFieldType.KEYWORD(),
+                JobDescPropName.COLLECT_ID: _EsFieldType.LONG(),
+                JobDescPropName.TITLE: _EsFieldType.TEXT_KEYWORD(),
+                JobDescPropName.TAGS: _EsFieldType.TEXT_KEYWORD(),
+                JobDescPropName.COMPANY: _EsFieldType.TEXT_KEYWORD(),
+                JobDescPropName.OVERVIEW: _EsFieldType.TEXT(fielddata=True,
+                                                            analyzer=_EsAnalysisName.TAG_ANALYZER),
+                JobDescPropName.REQUIREMENT: _EsFieldType.TEXT(fielddata=True,
+                                                               analyzer=_EsAnalysisName.TAG_ANALYZER),
+                JobDescPropName.BENEFIT: _EsFieldType.TEXT(fielddata=True,
+                                                           analyzer=_EsAnalysisName.TAG_ANALYZER),
             },
         }
     }

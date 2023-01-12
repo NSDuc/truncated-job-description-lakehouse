@@ -7,8 +7,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from job_desc_lakehouse.DTO.job_desc_dto import JobDescriptionDTO
-from job_desc_lakehouse.DTO.job_desc_dto_builder import ItViecJobDescDTOBuilder
+from job_desc_lakehouse.DTO.job_desc import JobDesc
+from job_desc_lakehouse.DTO.job_desc_builder import ItViecJobDescBuilder
 
 
 class JDCollectOptions:
@@ -27,14 +27,14 @@ class JDCollectService:
     def __init__(self):
         self.job_desc_dto_builder = None
 
-    def collect_job_descriptions(self, options: JDCollectOptions) -> List[JobDescriptionDTO]:
+    def collect_job_descriptions(self, options: JDCollectOptions) -> List[JobDesc]:
         pass
 
 
 class JDCollectServiceImpl(JDCollectService):
     def __init__(self):
         super(JDCollectServiceImpl, self).__init__()
-        self.job_desc_dto_builder = ItViecJobDescDTOBuilder()
+        self.job_desc_dto_builder = ItViecJobDescBuilder()
         self.firefox_options = Options()
         self.firefox_options.headless = True
 
@@ -52,7 +52,7 @@ class JDCollectServiceImpl(JDCollectService):
             page_num = max([int(elm.text) for elm in page_li_elm_list if elm.text.isdigit()])
         return page_num
 
-    def scrape_job_descriptions(self, options: JDCollectOptions) -> List[JobDescriptionDTO]:
+    def scrape_job_descriptions(self, options: JDCollectOptions) -> List[JobDesc]:
         if options.max_job_collect_per_task():
             # optimize runtime: 20 is number of jobs per page
             pages = range(1, options.max_job_collect_per_task()//20 + 2)
@@ -67,8 +67,8 @@ class JDCollectServiceImpl(JDCollectService):
                 del jobs[-1]  # remove job which is collected in previous run
         return jobs
 
-    def scrape_job_descriptions_in_page(self, page, last_job_id=None, max_job_num=None) -> List[JobDescriptionDTO]:
-        job_desc_dto_builder = ItViecJobDescDTOBuilder()
+    def scrape_job_descriptions_in_page(self, page, last_job_id=None, max_job_num=None) -> List[JobDesc]:
+        job_desc_dto_builder = ItViecJobDescBuilder()
         jobs = []
 
         with self.get_firefox_driver() as driver:
@@ -103,7 +103,7 @@ class JDCollectServiceImpl(JDCollectService):
 
         return jobs
 
-    def scrape_job_descriptions_in_multiple_pages(self, pages, options: JDCollectOptions) -> List[JobDescriptionDTO]:
+    def scrape_job_descriptions_in_multiple_pages(self, pages, options: JDCollectOptions) -> List[JobDesc]:
         jobs = []
         with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
             jobs_groups = executor.map(self.scrape_job_descriptions_in_page, pages)
@@ -119,5 +119,5 @@ class JDCollectServiceImpl(JDCollectService):
                     break
         return jobs
 
-    def collect_job_descriptions(self, options: JDCollectOptions) -> List[JobDescriptionDTO]:
+    def collect_job_descriptions(self, options: JDCollectOptions) -> List[JobDesc]:
         return self.scrape_job_descriptions(options)
